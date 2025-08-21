@@ -53,7 +53,7 @@ function load_parameters()
     # Number of invariant curve points
     p["N"] = length(p["tht0"]);
     # Number of multiple shooting points
-    p["M"] = 5;
+    p["M"] = 25;
     # Phase condition flag
     p["phsflg"] = true;
     # Parameterization constraints
@@ -120,13 +120,13 @@ function main()
     #
     # =================================
     # =================================
-    plotly()
+    gr()
     # INITIALIZATION
     # Load parameters
     p = load_parameters();
 
     # COMPUTE PERIODIC ORBIT
-    zpo = matread("NRHO92.mat");
+    zpo = matread(joinpath(@__DIR__, "NRHO92.mat"));
     zpo = [zpo["x0"]; zpo["T"]];
     # Initialize for multiple shooting
     (z0, UdA) = po_ms_initialization(zpo, p);
@@ -161,7 +161,7 @@ function main()
 
     # SAVE DATA
     # Save orbit in MAT file
-    matwrite("./orbits.mat", Dict(
+    matwrite(joinpath(@__DIR__, "orbits.mat"), Dict(
         "UB" => zB[end].z
     ))
     
